@@ -2,21 +2,16 @@ package org.launchcode.cheesemvc.models;
 
 public class Cheese {
 
-    private int id;
+    private int cheeseId;
     private static int nextId=1;
     private String name;
     private String description;
 
     // Constructors
     public Cheese() {
-        id=nextId;
+        cheeseId=nextId;
         nextId++;
     }
-
-   // public Cheese(String name) {
-   //     this();
-   //     this.name=name;
-   // }
 
     public Cheese(String name, String description) {
         this();
@@ -25,8 +20,12 @@ public class Cheese {
     }
 
     //getters and setters
-    public int getId() {
-        return id;
+    public int getCheeseId() {
+        return cheeseId;
+    }
+
+    public void setCheeseId(int cheeseId) {
+        this.cheeseId=cheeseId;
     }
 
     public String getName() {

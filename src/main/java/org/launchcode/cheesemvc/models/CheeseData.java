@@ -11,8 +11,8 @@ public class CheeseData {
     }
 
     //add
-    public static void add(Cheese cheese) {
-        cheeses.add(cheese);
+    public static void add(Cheese newCheese) {
+        cheeses.add(newCheese);
     }
     //remove
     public static void remove(int id) {
@@ -26,7 +26,7 @@ public class CheeseData {
         Cheese theCheese=null;
 
         for (Cheese candidateCheese : cheeses) {
-            if (candidateCheese.getId() == id) {
+            if (candidateCheese.getCheeseId() == id) {
                 theCheese = candidateCheese;
             }
         }

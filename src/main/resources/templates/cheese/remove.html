@@ -8,8 +8,8 @@
 
 <form method="post">
     <div th:each="cheese : ${cheeses}" class="checkbox">
-        <input type="checkbox" name="cheeseIds" th:value="${cheese.id}" id="${cheese.id}" />
-        <label for="${cheese.id}" th:text="${cheese.name}" />
+        <input type="checkbox" name="cheeseIds" th:value="${cheese.cheeseId}" id="${cheese.cheeseId}" />
+        <label for="${cheese.cheeseId}" th:text="${cheese.name}" />
         <br />
     </div>
 

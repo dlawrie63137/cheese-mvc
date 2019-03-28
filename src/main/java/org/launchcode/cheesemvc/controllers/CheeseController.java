@@ -4,16 +4,17 @@ import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
 
 @Controller
 @RequestMapping("cheese")
 public class CheeseController {
+
+    private int cheeseId;
+    private String name;
+    private String description;
 
     // Request path: /cheese
     @RequestMapping(value = "")
@@ -34,7 +35,7 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public static String processAddCheeseForm(@ModelAttribute("newCheese") Cheese newCheese) {
         CheeseData.add(newCheese);
-        
+
         //redirect to /cheese
         return "redirect:";
     }
@@ -56,6 +57,29 @@ public class CheeseController {
            CheeseData.remove(cheeseId);
         }
         return "redirect:";
+    }
+
+    // cheese/edit/
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId) {
+
+        Cheese cheese=CheeseData.getById(cheeseId);
+
+        model.addAttribute(cheese);
+        model.addAttribute("title", "My Cheeses");
+
+        return "cheese/edit";
+    }
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
+    public String processEditForm(@RequestParam int cheeseId, @RequestParam String name, @RequestParam String description ) {
+
+        Cheese cheese = CheeseData.getById(cheeseId);
+
+        cheese.setName(name);
+        cheese.setDescription(description);
+
+        return "redirect:/cheese";
     }
 }
 
