@@ -4,6 +4,7 @@ body {font-family:sans serif;
       background-color:lightblue;
 }
 
+
 html, body {width:100%;
 }
 
@@ -17,7 +18,7 @@ a {padding-right:3%;
 select {width:100px;
 }
 
-table { padding-top:50px;
+table {padding-top:50px;
         margin: 0 auto;
 }
 
@@ -25,4 +26,11 @@ thead {text-decoration:underline;
 }
 
 td {padding-right:40px;
-    padding-left:40px;}
+    padding-left:40px;
+}
+
+.error {color:red;
+
+}
+
+

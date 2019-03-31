@@ -8,14 +8,27 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <form method="post" style="max-width: 680px;">
+    <form method="post" style="max-width: 680px;" th:object="${cheese}">
+        <div class="form-group">
+            <label th:for="name">Cheese:</label>
+            <input class="form-control" th:field="*{name}"/>
+           <i><span th:errors="*{name}" class="text-danger"></span></i>
+        </div>
+        <div class="form-group">
+            <label th:for="description">Description:</label>
+            <input class="form-control" th:field="*{description}"/>
+            <i><span th:errors="*{description}" class="text-danger"></span></i>
+        </div>
     <div class="form-group">
-        <label for="name-field">Cheese:</label>
-        <input class="form-control" th:value="${cheese.name}" id="name-field" type="text" name="name" />
-        <input type="hidden" th:value="${cheeseId}" name="cheeseId" />
+        <label th:for="type">Type:</label>
+        <select th:field="${cheese.type}">
+            <option th:each="cheeseType : ${cheeseTypes}" th:text="${cheeseType.name}" th:value="${cheeseType}"></option>
+        </select>
     </div>
     <div class="form-group">
-        <label for="desc-field">Description:</label>
-        <input class="form-control" th:value="${cheese.description}" id="desc-field" type="text" name="description" />
+        <label th:for="rating">Rating:</label>
+        <input class="form-control" th:field="*{rating}"/>
+        <i><span th:errors="*{rating}" class="text-danger"></span></i>
     </div>
     <input type="submit" value="Edit Cheese"/>
 </form>

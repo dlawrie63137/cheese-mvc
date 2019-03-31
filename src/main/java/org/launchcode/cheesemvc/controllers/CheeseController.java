@@ -2,10 +2,13 @@ package org.launchcode.cheesemvc.controllers;
 
 import org.launchcode.cheesemvc.models.Cheese;
 import org.launchcode.cheesemvc.models.CheeseData;
+import org.launchcode.cheesemvc.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @Controller
@@ -28,12 +31,20 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public static String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
+        model.addAttribute("cheeseTypes", CheeseType.values());
+        model.addAttribute(new Cheese());
         return "cheese/add";
     }
 
     // request path: cheese/add
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public static String processAddCheeseForm(@ModelAttribute("newCheese") Cheese newCheese) {
+    public String processAddCheeseForm(Model model, @ModelAttribute @Valid Cheese newCheese, Errors errors) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Cheese");
+            model.addAttribute("cheeseTypes", CheeseType.values());
+            return "cheese/add";
+        }
+
         CheeseData.add(newCheese);
 
         //redirect to /cheese
@@ -66,19 +77,26 @@ public class CheeseController {
         Cheese cheese=CheeseData.getById(cheeseId);
 
         model.addAttribute(cheese);
-        model.addAttribute("title", "My Cheeses");
-
+        model.addAttribute("title", "Edit Cheese");
+        model.addAttribute("cheeseTypes", CheeseType.values());
         return "cheese/edit";
     }
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.POST)
-    public String processEditForm(@RequestParam int cheeseId, @RequestParam String name, @RequestParam String description ) {
+    public String processEditForm(Model model, @ModelAttribute @Valid Cheese newCheese, Errors errors) {
 
-        Cheese cheese = CheeseData.getById(cheeseId);
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Cheese");
+            model.addAttribute("cheeseTypes", CheeseType.values());
+            return "cheese/edit";
+        }
 
-        cheese.setName(name);
-        cheese.setDescription(description);
-
+        Cheese cheese;
+        cheese = CheeseData.getById(newCheese.getCheeseId());
+        cheese.setName(newCheese.getName());
+        cheese.setDescription(newCheese.getDescription());
+        cheese.setType(newCheese.getType());
+        cheese.setRating(newCheese.getRating());
         return "redirect:/cheese";
     }
 }
