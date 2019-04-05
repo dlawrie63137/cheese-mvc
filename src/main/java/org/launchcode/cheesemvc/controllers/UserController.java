@@ -34,19 +34,11 @@ public class UserController {
         }
         else {
             UserData.add(user);
-            System.out.println("are we here?");
-            System.out.println(user);
             model.addAttribute("user", user);
             model.addAttribute("title", "User Sign-up");
             model.addAttribute("users", UserData.getAll());
         }
         return "user/index";
-
-        //else {
-        //    model.addAttribute("title", "User Sign-up");
-        //    model.addAttribute("message", "Passwords Do Not Match.");
-        //    return "user/add";
-        //}
 
     }
 
@@ -56,7 +48,6 @@ public class UserController {
         User user=UserData.getById(userId);
         model.addAttribute("user", user);
         model.addAttribute("title", "User Info");
-        System.out.println("did we get here?");
         return "user/info";
     }
 
